@@ -21,7 +21,7 @@ class HomePage extends StatelessWidget {
         "Welcome to $days days of Flutter with $name",
         style: TextStyle(
             color: Colors.blue.shade400,
-            fontSize: 25,
+            fontSize: 20,
             fontWeight: FontWeight.bold),
       )),
       drawer: Drawer(
@@ -29,7 +29,7 @@ class HomePage extends StatelessWidget {
         children: [
           Center(
             child: Text(
-              "menu 1",
+              "Menu 0",
               style: TextStyle(
                   fontWeight: FontWeight.bold,
                   fontSize: 40,
@@ -39,7 +39,7 @@ class HomePage extends StatelessWidget {
           ),
           Center(
             child: Text(
-              "menu 1",
+              "Menu 1",
               style: TextStyle(
                   fontWeight: FontWeight.bold,
                   fontSize: 40,
@@ -49,7 +49,7 @@ class HomePage extends StatelessWidget {
           ),
           Center(
             child: Text(
-              "menu 1",
+              "Menu 2",
               style: TextStyle(
                   fontWeight: FontWeight.bold,
                   fontSize: 40,
@@ -59,7 +59,7 @@ class HomePage extends StatelessWidget {
           ),
           Center(
             child: Text(
-              "menu 1",
+              "Menu 3",
               style: TextStyle(
                   fontWeight: FontWeight.bold,
                   fontSize: 40,
