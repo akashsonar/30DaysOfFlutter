@@ -22,9 +22,9 @@ class FlutterPractice extends StatelessWidget {
           fontFamily: GoogleFonts.poppins().fontFamily),
       initialRoute: "/",
       routes: {
-        "/": (context) => const LoginPage(),
+        "/": (context) => LoginPage(),
         MyRoutes.homeRoute: (context) => const HomePage(),
-        MyRoutes.loginRoute: (context) => const LoginPage()
+        MyRoutes.loginRoute: (context) => LoginPage()
       },
     );
   }
