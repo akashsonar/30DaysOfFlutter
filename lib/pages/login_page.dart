@@ -98,7 +98,7 @@ class _LoginPageState extends State<LoginPage> {
                     height: 40.0,
                   ),
                   Material(
-                    color: Colors.blue.shade600,
+                    color: Colors.teal,
                     // shape:
                     //     conditionMet ? BoxShape.circle : BoxShape.rectangle,
                     borderRadius: const BorderRadius.all(
