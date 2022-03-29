@@ -31,12 +31,13 @@ class HomePage extends StatelessWidget {
       body: Center(
           child: Text(
         "Welcome to $days days of Flutter with $name",
-        style: TextStyle(
+        // ignore: prefer_const_constructors
+        style: const TextStyle(
             color: Colors.teal,
             fontSize: 20,
             fontWeight: FontWeight.bold),
       )),
-      drawer: MyDrawer()
+      drawer: const MyDrawer()
     );
   }
 }
