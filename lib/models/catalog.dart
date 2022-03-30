@@ -1,3 +1,15 @@
+class Item {
+  final num id;
+  final String title;
+  final num price;
+  final String description;
+  final String catagory;
+  final String image;
+  final String rating;
+
+  Item(this.id, this.title, this.price, this.description, this.catagory, this.image, this.rating);
+}
+
 final products = [
   {
     "id": 1,
