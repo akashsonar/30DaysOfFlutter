@@ -46,7 +46,7 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
-    // int days = 30;
+    // String currency = "$";
     // var name = "Akash";
     return Scaffold(
         backgroundColor: Colors.white,
@@ -61,13 +61,50 @@ class _HomePageState extends State<HomePage> {
           ),
         ),
         body: Padding(
-          padding: const EdgeInsets.all(16.0),
-          child: (CatalogModel.items != null && CatalogModel.items.isNotEmpty)
-              ? ListView.builder(
+          padding: const EdgeInsets.all(30.0),
+          child: (CatalogModel.items.isNotEmpty)
+              ? GridView.builder(
+                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                      crossAxisCount: 2,
+                      mainAxisSpacing: 15,
+                      crossAxisSpacing: 15),
+                  itemBuilder: (BuildContext context, int index) {
+                    final item = CatalogModel.items[index];
+                    return Card(
+                        clipBehavior: Clip.antiAlias,
+                        shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(10)),
+                        child: GridTile(
+                            header: Container(
+                              padding: const EdgeInsets.all(8),
+                              decoration:
+                                  const BoxDecoration(color: Colors.teal),
+                              child: Text(
+                                item.title.toString(),
+                                style: const TextStyle(
+                                    color: Colors.white,
+                                    fontWeight: FontWeight.bold),
+                                overflow: TextOverflow.ellipsis,
+                                textAlign: TextAlign.center,
+                              ),
+                            ),
+                            footer: Container(
+                                padding: const EdgeInsets.all(8),
+                                decoration:
+                                    const BoxDecoration(color: Colors.black),
+                                child: Text(
+                                  item.price.toString(),
+                                  style: const TextStyle(color: Colors.white),
+                                )),
+                            child: Image.network(item.image.toString())));
+                  },
                   itemCount: CatalogModel.items.length,
-                  itemBuilder: (BuildContext context, int index) => ItemWidget(
-                        item: CatalogModel.items[index],
-                      ))
+                )
+              // ListView.builder(
+              //     itemCount: CatalogModel.items.length,
+              //     itemBuilder: (BuildContext context, int index) => ItemWidget(
+              //           item: CatalogModel.items[index],
+              //         ))
               : const Center(
                   child: CircularProgressIndicator(),
                 ),
