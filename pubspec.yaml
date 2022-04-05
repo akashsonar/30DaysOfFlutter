@@ -41,6 +41,7 @@ dependencies:
   url_launcher: ^6.0.20
   font_awesome_flutter: ^10.1.0
   http: ^0.13.4
+  velocity_x: ^3.4.0
   
 
 

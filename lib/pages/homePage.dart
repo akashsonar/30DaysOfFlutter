@@ -5,7 +5,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_app/models/catalog.dart';
 import 'package:flutter_app/widgets/drawer.dart';
 import 'package:flutter_app/widgets/item_widget.dart';
+import 'package:flutter_app/widgets/themes.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:velocity_x/velocity_x.dart';
 
 //learned about context and constraints
 
@@ -49,66 +51,117 @@ class _HomePageState extends State<HomePage> {
     // String currency = "$";
     // var name = "Akash";
     return Scaffold(
-        backgroundColor: Colors.white,
-        appBar: AppBar(
-          centerTitle: true,
-          title: Text(
-            "Cataloge App",
-            style: TextStyle(
-                fontSize: 25,
-                fontWeight: FontWeight.bold,
-                fontFamily: GoogleFonts.poppins().fontFamily),
-          ),
-        ),
-        body: Padding(
-          padding: const EdgeInsets.all(30.0),
-          child: (CatalogModel.items.isNotEmpty)
-              ? GridView.builder(
-                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                      crossAxisCount: 2,
-                      mainAxisSpacing: 15,
-                      crossAxisSpacing: 15),
-                  itemBuilder: (BuildContext context, int index) {
-                    final item = CatalogModel.items[index];
-                    return Card(
-                        clipBehavior: Clip.antiAlias,
-                        shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(10)),
-                        child: GridTile(
-                            header: Container(
-                              padding: const EdgeInsets.all(8),
-                              decoration:
-                                  const BoxDecoration(color: Colors.teal),
-                              child: Text(
-                                item.title.toString(),
-                                style: const TextStyle(
-                                    color: Colors.white,
-                                    fontWeight: FontWeight.bold),
-                                overflow: TextOverflow.ellipsis,
-                                textAlign: TextAlign.center,
-                              ),
-                            ),
-                            footer: Container(
-                                padding: const EdgeInsets.all(8),
-                                decoration:
-                                    const BoxDecoration(color: Colors.black),
-                                child: Text(
-                                  item.price.toString(),
-                                  style: const TextStyle(color: Colors.white),
-                                )),
-                            child: Image.network(item.image.toString())));
-                  },
-                  itemCount: CatalogModel.items.length,
-                )
-              // ListView.builder(
-              //     itemCount: CatalogModel.items.length,
-              //     itemBuilder: (BuildContext context, int index) => ItemWidget(
-              //           item: CatalogModel.items[index],
-              //         ))
-              : const Center(
-                  child: CircularProgressIndicator(),
-                ),
-        ),
-        drawer: const MyDrawer());
+      backgroundColor: MyTheme.creamColor,
+      body: SafeArea(
+          child: Container(
+              padding: Vx.m32,
+              child: Column(
+                children: [
+                  const CatalogHeader(),
+                  (CatalogModel.items.isNotEmpty
+                      ? const CatalogList().expand()
+                      : const Center(
+                          child: CircularProgressIndicator(),
+                        ))
+                ],
+              ))),
+    );
+  }
+}
+
+class CatalogHeader extends StatelessWidget {
+  const CatalogHeader({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.center,
+      children: [
+        "Catalog App".text.xl5.blue900.bold.make(),
+        "Trending Products".text.xl2.blue900.make()
+      ],
+    );
+  }
+}
+
+class CatalogList extends StatelessWidget {
+  const CatalogList({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return ListView.builder(
+      shrinkWrap: true,
+      itemBuilder: (BuildContext context, int index) {
+        final catalog = CatalogModel.items[index];
+        return CatalogItem(catalog: catalog);
+      },
+      itemCount: CatalogModel.items.length,
+    );
+  }
+}
+
+class CatalogItem extends StatelessWidget {
+  final Item catalog;
+
+  const CatalogItem({Key? key, required this.catalog}) : super(key: key);
+  @override
+  Widget build(BuildContext context) {
+    return VxBox(
+        child: Row(
+      children: [
+        CatalogImage(image: catalog.image.toString()),
+        Expanded(
+            child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            catalog.title!.text.medium.bold
+                .maxLines(1)
+                .overflow(TextOverflow.ellipsis)
+                .xl
+                .bold
+                .color(MyTheme.darkBluishColor)
+                .make(),
+            catalog.description!.text
+                .overflow(TextOverflow.ellipsis)
+                .maxLines(3)
+                .medium
+                .make(),
+                10.heightBox,
+            ButtonBar(
+              alignment: MainAxisAlignment.spaceBetween,
+              buttonPadding: Vx.m0,
+              children: [
+                "\$ ${catalog.price}".text.teal600.lg.bold.make(),
+                ElevatedButton(
+                    onPressed: () {},
+                    child: "Buy".text.make(),
+                    style: ButtonStyle(
+                        backgroundColor: MaterialStateProperty.all(Vx.teal600),
+                        shape:
+                            MaterialStateProperty.all(const StadiumBorder())))
+              ],
+            ).pOnly(right: 8)
+          ],
+        ))
+      ],
+    )).white.roundedSM.square(150).make().py16();
+  }
+}
+
+class CatalogImage extends StatelessWidget {
+  final String image;
+  const CatalogImage({Key? key, required this.image}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Image.network(image.toString())
+        .box
+        .p8
+        .rounded
+        .color(MyTheme.creamColor)
+        .make()
+        .p16()
+        .w32(context);
   }
 }
