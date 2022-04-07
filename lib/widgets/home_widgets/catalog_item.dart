@@ -1,9 +1,9 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:velocity_x/velocity_x.dart';
 
 import '../../models/catalog.dart';
 import '../../widgets/themes.dart';
-import 'catalog_image.dart';
 
 class CatalogItem extends StatelessWidget {
   final Item catalog;
@@ -16,7 +16,25 @@ class CatalogItem extends StatelessWidget {
       children: [
         Hero(
             tag: Key(catalog.id.toString()),
-            child: CatalogImage(image: catalog.image.toString())),
+            // ignore: avoid_unnecessary_containers
+            child: Container(
+                    child: CachedNetworkImage(
+                        imageUrl: catalog.image.toString(),
+                        progressIndicatorBuilder:
+                            (context, url, downloadProgress) =>
+                                CircularProgressIndicator(
+                                    value: downloadProgress.progress),
+                        errorWidget: (context, url, error) => const Icon(
+                            Icons.running_with_errors_outlined,
+                            semanticLabel: "Error Can't load Image")))
+                .box
+                .p8
+                .rounded
+                .color(MyTheme.creamColor)
+                .make()
+                .p16()
+                .w32(context)),
+        // child: CatalogImage(image: catalog.image.toString())),
         Expanded(
             child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -44,7 +62,8 @@ class CatalogItem extends StatelessWidget {
                     onPressed: () {},
                     child: "Buy".text.make(),
                     style: ButtonStyle(
-                        backgroundColor: MaterialStateProperty.all(Vx.lightBlue900),
+                        backgroundColor:
+                            MaterialStateProperty.all(Vx.lightBlue900),
                         shape:
                             MaterialStateProperty.all(const StadiumBorder())))
               ],

@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:velocity_x/velocity_x.dart';
-
 import 'package:flutter_app/models/catalog.dart';
 import 'package:flutter_app/widgets/themes.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 
 class HomeDetailPage extends StatelessWidget {
   final Item catalog;
@@ -13,7 +13,7 @@ class HomeDetailPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(),
+      appBar: AppBar(backgroundColor: Colors.transparent),
       // backgroundColor: Vx.white,
       bottomNavigationBar: Container(
         decoration: const BoxDecoration(
@@ -75,9 +75,21 @@ class HomeDetailPage extends StatelessWidget {
       // backgroundColor: MyTheme.creamColor,
       body: Column(
         children: [
+          catalog.category!.text.capitalize.xl.bold.make().p16(),
           Hero(
-              tag: Key(catalog.id.toString()),
-              child: Image.network(catalog.image.toString()).h32(context)),
+            tag: Key(catalog.id.toString()),
+            child: CachedNetworkImage(
+              // placeholder: (context, url) => const CircularProgressIndicator(),
+              imageUrl: catalog.image.toString(),
+
+              progressIndicatorBuilder: (context, url, downloadProgress) =>
+                  CircularProgressIndicator(value: downloadProgress.progress),
+              errorWidget: (context, url, error) => const Icon(Icons.running_with_errors_outlined, semanticLabel: "Error Can't load Image"),
+              // child: Hero(
+              //     tag: Key(catalog.id.toString()),
+              //     child: Image.network(catalog.image.toString()).h32(context)),
+            ).h32(context),
+          ),
           Expanded(
             child: VxArc(
                 height: 30.0,
@@ -90,13 +102,25 @@ class HomeDetailPage extends StatelessWidget {
                     children: [
                       catalog.title!.text.medium.xl3.center.bold
                           .color(Colors.black)
-                          .make(),
+                          .make()
+                          .p24(),
+                      // const SizedBox(height: 20),
+
                       catalog.description!.text
                           .textStyle(
-                              TextStyle(color: Colors.black.withOpacity(0.5)))
+                              TextStyle(color: Vx.black.withOpacity(0.5)))
                           .xl
+                          .maxLines(6)
                           .center
                           .make(),
+                      // const SizedBox(height: 20),
+                      // "Priegano in d'esse se senza sue non. Dovendo discerniamo di purita di in e, a dinanzi le che riguardando dovendo dio tal. Con si di il non occulta in dio, quali apparire apparire furon gli come il d'esse. Impetrata occulta di iscacciato ci forza. Medesimi con iscacciato convenevole alla manifestamente, non ammirabile che quella merito forse le alli e, bene."
+                      //     .text
+                      //     // .center
+                      //     .xl.center.maxLines(6)
+                      //     .textStyle(
+                      //         TextStyle(color: Vx.black.withOpacity(0.7)))
+                      //     .make().p16()
                       // ElevatedButton(onPressed: null, child: null)
                     ],
                   ).py64(),
