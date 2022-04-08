@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:velocity_x/velocity_x.dart';
 import 'package:flutter_app/models/catalog.dart';
 import 'package:cached_network_image/cached_network_image.dart';
+
 
 class HomeDetailPage extends StatelessWidget {
   final Item catalog;
@@ -16,85 +16,84 @@ class HomeDetailPage extends StatelessWidget {
       appBar: PreferredSize(
           preferredSize: const Size(50, 50),
           child: AppBar(
+            title: catalog.category!.text.capitalize.color(Theme.of(context).colorScheme.error).xl.bold.make(),
+            centerTitle: true,
             backgroundColor: Colors.transparent,
-            systemOverlayStyle: SystemUiOverlayStyle.dark,
+            // systemOverlayStyle: ,
           )),
       // backgroundColor: Vx.white,
       bottomNavigationBar: Container(
-        decoration: const BoxDecoration(
-          borderRadius: BorderRadius.only(
+        decoration: BoxDecoration(
+          borderRadius: const BorderRadius.only(
               topRight: Radius.circular(35.0), topLeft: Radius.circular(35.0)),
-          color: Vx.lightBlue900,
+          color: Theme.of(context).colorScheme.primary,
         ),
-        child: ButtonBar(
-          alignment: MainAxisAlignment.spaceBetween,
-          // buttonPadding: Vx.m0,
-          children: [
-            "\$ ${catalog.price}"
-                .text
-                .xl4
-                .white
-                .bold
-                .fontFamily(GoogleFonts.montserrat().fontFamily.toString())
-                .make(),
-            // ElevatedButton.icon(
-            //     icon: const Icon(
-            //       Icons.shopping_cart_outlined,
-            //       // color: Colors.pink,
-            //       size: 24.0,
-            //     ),
-            //     onPressed: () {},
-            //     label: "add to cart".text.xl.make(),
-            //     style: ButtonStyle(
-            //         backgroundColor: MaterialStateProperty.all(Vx.teal600),
-            //         shape: MaterialStateProperty.all(const StadiumBorder()))),
-            Expanded(
-                child: Row(
-              children: [
-                ElevatedButton.icon(
-                        icon: const Icon(
-                          Icons.shopping_bag_outlined,
-                          color: Colors.black,
-                          size: 24.0,
-                        ),
-                        onPressed: () {},
-                        label: "add to cart"
-                            .text.capitalize
-                            .lg
-                            .black
-                            .fontFamily(
-                                GoogleFonts.montserrat().fontFamily.toString())
-                            .make(),
-                        style: ButtonStyle(
-                            overlayColor: MaterialStateProperty.all(Vx.blueGray400),
-                            backgroundColor:
-                                MaterialStateProperty.all(Vx.white),
-                            shape: MaterialStateProperty.all(
-                                const StadiumBorder())))
-                    .wh(160, 60)
-              ],
-            ))
-          ],
-        ).p8(),
+        child: Container(
+          color: Theme.of(context).colorScheme.inversePrimary,
+          child: ButtonBar(
+            alignment: MainAxisAlignment.spaceBetween,
+            // buttonPadding: Vx.m0,
+            children: [
+              "\$ ${catalog.price}"
+                  .text
+                  .xl4
+                  .white
+                  .bold
+                  .fontFamily(GoogleFonts.montserrat().fontFamily.toString())
+                  .make(),
+              // ElevatedButton.icon(
+              //     icon: const Icon(
+              //       Icons.shopping_cart_outlined,
+              //       // color: Colors.pink,
+              //       size: 24.0,
+              //     ),
+              //     onPressed: () {},
+              //     label: "add to cart".text.xl.make(),
+              //     style: ButtonStyle(
+              //         backgroundColor: MaterialStateProperty.all(Vx.teal600),
+              //         shape: MaterialStateProperty.all(const StadiumBorder()))),
+              Expanded(
+                  child: Row(
+                children: [
+                  ElevatedButton.icon(
+                          icon: const Icon(
+                            Icons.shopping_bag_outlined,
+                            color: Colors.black,
+                            size: 24.0,
+                          ),
+                          onPressed: () {},
+                          label: "add to cart"
+                              .text.capitalize
+                              .lg
+                              .black
+                              .fontFamily(
+                                  GoogleFonts.montserrat().fontFamily.toString())
+                              .make(),
+                          style: ButtonStyle(
+                              // overlayColor: MaterialStateProperty.all(Vx.blueGray400),
+                              backgroundColor:
+                                  MaterialStateProperty.all(Vx.white),
+                              shape: MaterialStateProperty.all(
+                                  const StadiumBorder())))
+                      .wh(160, 60)
+                ],
+              ))
+            ],
+          ).p8(),
+        ),
       ),
-      // backgroundColor: MyTheme.creamColor,
+      // backgroundColor: Theme.of(context).colorScheme.surface,
       body: Column(
         children: [
-          catalog.category!.text.capitalize.xl.bold.make().p16(),
+          // catalog.category!.text.capitalize.color(context.accentColor).xl.bold.make().pOnly(bottom: 50),
           Hero(
             tag: Key(catalog.id.toString()),
             child: CachedNetworkImage(
               // placeholder: (context, url) => const CircularProgressIndicator(),
               imageUrl: catalog.image.toString(),
-
-              progressIndicatorBuilder: (context, url, downloadProgress) =>
-                  CircularProgressIndicator(value: downloadProgress.progress),
               errorWidget: (context, url, error) => const Icon(
                   Icons.running_with_errors_outlined,
                   semanticLabel: "Error Can't load Image"),
-              // child: Hero(
-              //     tag: Key(catalog.id.toString()),
-              //     child: Image.network(catalog.image.toString()).h32(context)),
             ).h32(context),
           ),
           Expanded(
@@ -104,11 +103,13 @@ class HomeDetailPage extends StatelessWidget {
                 edge: VxEdge.TOP,
                 child: Container(
                   width: context.screenWidth,
-                  color: Vx.white,
+                  // color: Vx.white,
+                  color: Theme.of(context).colorScheme.onError,
                   child: Column(
                     children: [
                       catalog.title!.text.medium.xl3.center.bold
-                          .color(Colors.black)
+                          // .color(Colors.black)
+                          .color(Theme.of(context).colorScheme.error)
                           .make()
                           .p24(),
                       // const SizedBox(height: 20),
@@ -117,24 +118,16 @@ class HomeDetailPage extends StatelessWidget {
                           .textStyle(
                               TextStyle(color: Vx.black.withOpacity(0.5)))
                           .xl
-                          .maxLines(6)
+                          .color(Theme.of(context).colorScheme.error)
+                          .maxLines(5)
                           .center
                           .make(),
-                      // const SizedBox(height: 20),
-                      // "Priegano in d'esse se senza sue non. Dovendo discerniamo di purita di in e, a dinanzi le che riguardando dovendo dio tal. Con si di il non occulta in dio, quali apparire apparire furon gli come il d'esse. Impetrata occulta di iscacciato ci forza. Medesimi con iscacciato convenevole alla manifestamente, non ammirabile che quella merito forse le alli e, bene."
-                      //     .text
-                      //     // .center
-                      //     .xl.center.maxLines(6)
-                      //     .textStyle(
-                      //         TextStyle(color: Vx.black.withOpacity(0.7)))
-                      //     .make().p16()
-                      // ElevatedButton(onPressed: null, child: null)
                     ],
                   ).py64(),
-                ).p4()),
+                ).p0()),
           )
         ],
-      ).safeArea(bottom: false),
+      ).safeArea(bottom: false).pOnly(top: 30),
     );
   }
 }

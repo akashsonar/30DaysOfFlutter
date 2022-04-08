@@ -4,7 +4,8 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:velocity_x/velocity_x.dart';
 
 import '../../models/catalog.dart';
-import '../../widgets/themes.dart';
+import '../themes.dart';
+// import '../../widgets/themes.dart';
 
 class CatalogItem extends StatelessWidget {
   final Item catalog;
@@ -21,17 +22,13 @@ class CatalogItem extends StatelessWidget {
             child: Container(
                     child: CachedNetworkImage(
                         imageUrl: catalog.image.toString(),
-                        progressIndicatorBuilder:
-                            (context, url, downloadProgress) =>
-                                CircularProgressIndicator(
-                                    value: downloadProgress.progress),
                         errorWidget: (context, url, error) => const Icon(
-                            Icons.running_with_errors_outlined,
-                            semanticLabel: "Error Can't load Image")))
+                            Icons.running_with_errors_outlined)))
                 .box
-                .p8
+                .p12
                 .rounded
-                .color(MyTheme.creamColor)
+                // .color(MyTheme.creamColor)
+                .color(Theme.of(context).colorScheme.onSecondary)
                 .make()
                 .p16()
                 .w32(context)),
@@ -46,10 +43,12 @@ class CatalogItem extends StatelessWidget {
                 .overflow(TextOverflow.ellipsis)
                 .xl
                 .bold
-                .color(Vx.lightBlue900)
+                // .color(Vx.lightBlue900)
+                .color(Theme.of(context).colorScheme.secondary)
                 .make(),
             catalog.description!.text
                 .overflow(TextOverflow.ellipsis)
+                .color(Theme.of(context).colorScheme.secondary)
                 .maxLines(3)
                 .medium
                 .make(),
@@ -58,13 +57,19 @@ class CatalogItem extends StatelessWidget {
               alignment: MainAxisAlignment.spaceBetween,
               buttonPadding: Vx.m0,
               children: [
-                "\$ ${catalog.price}".text.lightBlue700.lg.bold.make(),
+                "\$ ${catalog.price}".text
+                // .lightBlue700
+                .color(Theme.of(context).colorScheme.secondary)
+                .lg.bold.make(),
                 ElevatedButton(
                     onPressed: () {},
-                    child: "add to cart".text.sm.fontFamily(GoogleFonts.montserrat().fontFamily!).capitalize.make(),
+                    child: "add to cart".text.sm.fontFamily(GoogleFonts.montserrat().fontFamily!).color(Theme.of(context).colorScheme.onSurface).capitalize.make(),
                     style: ButtonStyle(
                         backgroundColor:
-                            MaterialStateProperty.all(Vx.lightBlue900),
+                            MaterialStateProperty.all(
+                              // Vx.lightBlue900
+                              Theme.of(context).colorScheme.onBackground
+                              ),
                         shape:
                             MaterialStateProperty.all(const StadiumBorder())))
               ],
@@ -72,6 +77,6 @@ class CatalogItem extends StatelessWidget {
           ],
         ))
       ],
-    )).white.roundedSM.square(150).make().py16();
+    )).color(Theme.of(context).colorScheme.onPrimary).customRounded(const BorderRadius.all(Radius.circular(20))).square(150).make().py16();
   }
 }

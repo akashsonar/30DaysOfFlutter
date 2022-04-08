@@ -5,7 +5,6 @@ import 'package:flutter/services.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_app/models/catalog.dart';
 import 'package:flutter_app/utils/routes.dart';
-import 'package:flutter_app/widgets/themes.dart';
 import 'package:velocity_x/velocity_x.dart';
 
 import '../widgets/home_widgets/catalog_header.dart';
@@ -53,17 +52,18 @@ class _HomePageState extends State<HomePage> {
     // var name = "Akash";
     return Scaffold(
       floatingActionButton: FloatingActionButton(
+        backgroundColor: Theme.of(context).colorScheme.onBackground,
         onPressed: () {
           Navigator.pushNamed(context, MyRoutes.cartRoute);
         },
-        child: const Icon(CupertinoIcons.cart, size: 26),
+        child: const Icon(CupertinoIcons.cart, size: 26, color: Vx.white),
       ),
-      backgroundColor: MyTheme.creamColor,
+      backgroundColor: Theme.of(context).canvasColor,
       appBar: PreferredSize(
         preferredSize: const Size(0, 0),
         child: AppBar(
-          systemOverlayStyle: SystemUiOverlayStyle.dark,
-          backgroundColor: MyTheme.creamColor,
+          // systemOverlayStyle: SystemUiOverlayStyle.dark,
+          backgroundColor: Theme.of(context).canvasColor,
         ),
       ),
       body: Container(
@@ -74,7 +74,7 @@ class _HomePageState extends State<HomePage> {
               const CatalogHeader(),
               (CatalogModel.items.isNotEmpty
                   ? const CatalogList().py16().expand()
-                  : const CircularProgressIndicator().centered().expand())
+                  : CircularProgressIndicator(color: Theme.of(context).colorScheme.background,).centered().expand())
             ],
           )),
     );
