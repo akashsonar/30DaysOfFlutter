@@ -1,5 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:velocity_x/velocity_x.dart';
 
 import '../../models/catalog.dart';
@@ -60,7 +61,7 @@ class CatalogItem extends StatelessWidget {
                 "\$ ${catalog.price}".text.lightBlue700.lg.bold.make(),
                 ElevatedButton(
                     onPressed: () {},
-                    child: "Buy".text.make(),
+                    child: "add to cart".text.sm.fontFamily(GoogleFonts.montserrat().fontFamily!).capitalize.make(),
                     style: ButtonStyle(
                         backgroundColor:
                             MaterialStateProperty.all(Vx.lightBlue900),

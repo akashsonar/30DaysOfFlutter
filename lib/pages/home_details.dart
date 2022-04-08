@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:velocity_x/velocity_x.dart';
 import 'package:flutter_app/models/catalog.dart';
-import 'package:flutter_app/widgets/themes.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 
 class HomeDetailPage extends StatelessWidget {
@@ -13,7 +13,12 @@ class HomeDetailPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(backgroundColor: Colors.transparent),
+      appBar: PreferredSize(
+          preferredSize: const Size(50, 50),
+          child: AppBar(
+            backgroundColor: Colors.transparent,
+            systemOverlayStyle: SystemUiOverlayStyle.dark,
+          )),
       // backgroundColor: Vx.white,
       bottomNavigationBar: Container(
         decoration: const BoxDecoration(
@@ -53,20 +58,20 @@ class HomeDetailPage extends StatelessWidget {
                           size: 24.0,
                         ),
                         onPressed: () {},
-                        label: "Buy"
-                            .text
-                            .xl
+                        label: "add to cart"
+                            .text.capitalize
+                            .lg
                             .black
                             .fontFamily(
                                 GoogleFonts.montserrat().fontFamily.toString())
                             .make(),
                         style: ButtonStyle(
-                            overlayColor: MaterialStateProperty.all(Vx.teal100),
+                            overlayColor: MaterialStateProperty.all(Vx.blueGray400),
                             backgroundColor:
                                 MaterialStateProperty.all(Vx.white),
                             shape: MaterialStateProperty.all(
                                 const StadiumBorder())))
-                    .wh(110, 60)
+                    .wh(160, 60)
               ],
             ))
           ],
@@ -84,7 +89,9 @@ class HomeDetailPage extends StatelessWidget {
 
               progressIndicatorBuilder: (context, url, downloadProgress) =>
                   CircularProgressIndicator(value: downloadProgress.progress),
-              errorWidget: (context, url, error) => const Icon(Icons.running_with_errors_outlined, semanticLabel: "Error Can't load Image"),
+              errorWidget: (context, url, error) => const Icon(
+                  Icons.running_with_errors_outlined,
+                  semanticLabel: "Error Can't load Image"),
               // child: Hero(
               //     tag: Key(catalog.id.toString()),
               //     child: Image.network(catalog.image.toString()).h32(context)),
