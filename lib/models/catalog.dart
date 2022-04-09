@@ -13,7 +13,7 @@ class CatalogModel {
         orElse: null);
   }
 
-  static Item getById(int id) {
+   Item getById(int id) {
     return items.firstWhere((element) => element.id == id, orElse: null);
   }
 
@@ -120,4 +120,6 @@ class Item {
         category.hashCode ^
         image.hashCode;
   }
+
+  toList() {}
 }
