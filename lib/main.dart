@@ -3,7 +3,6 @@ import 'package:flutter_app/pages/cart_page.dart';
 import 'package:flutter_app/pages/homePage.dart';
 import 'package:flutter_app/utils/routes.dart';
 import 'package:flutter_app/widgets/themes.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:flutter/services.dart';
 
 import 'pages/login_page.dart';

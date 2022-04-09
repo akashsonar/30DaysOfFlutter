@@ -1,16 +1,23 @@
 import 'dart:convert';
 
 class CatalogModel {
-  static List<Item> items = [
-    // Item(
-    //     id: 1,
-    //     title: "Fjallraven - Foldsack No. 1 Backpack, Fits 15 Laptops",
-    //     price: 109.95,
-    //     description:
-    //         "Your perfect pack for everyday use and walks in the forest. Stash your laptop (up to 15 inches) in the padded sleeve, your everyday",
-    //     category: "men's clothing",
-    //     image: "https://fakestoreapi.com/img/81fPKd-2AYL._AC_SL1500_.jpg"),
-  ];
+  static List<Item> items = [];
+
+  //get item by id
+
+  // static Item getById(int id) => {
+  //   items.firstWhere((element) => element.id == id, orElse: null)
+  // };
+  static Item getItemByDescription(String description) {
+    return items.firstWhere((element) => element.description == description,
+        orElse: null);
+  }
+
+  static Item getById(int id) {
+    return items.firstWhere((element) => element.id == id, orElse: null);
+  }
+
+  static Item getByPosition(int pos) => items[pos];
 }
 
 class Item {
@@ -20,14 +27,13 @@ class Item {
   String? description;
   String? category;
   String? image;
-  Item({
-    this.id,
-    this.title,
-    this.price,
-    this.description,
-    this.category,
-    this.image
-  });
+  Item(
+      {this.id,
+      this.title,
+      this.price,
+      this.description,
+      this.category,
+      this.image});
 
   Item copyWith({
     int? id,
@@ -49,26 +55,26 @@ class Item {
 
   Map<String, dynamic> toMap() {
     final result = <String, dynamic>{};
-  
-    if(id != null){
+
+    if (id != null) {
       result.addAll({'id': id});
     }
-    if(title != null){
+    if (title != null) {
       result.addAll({'title': title});
     }
-    if(price != null){
+    if (price != null) {
       result.addAll({'price': price});
     }
-    if(description != null){
+    if (description != null) {
       result.addAll({'description': description});
     }
-    if(category != null){
+    if (category != null) {
       result.addAll({'category': category});
     }
-    if(image != null){
+    if (image != null) {
       result.addAll({'image': image});
     }
-  
+
     return result;
   }
 
@@ -95,23 +101,23 @@ class Item {
   @override
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
-  
+
     return other is Item &&
-      other.id == id &&
-      other.title == title &&
-      other.price == price &&
-      other.description == description &&
-      other.category == category &&
-      other.image == image;
+        other.id == id &&
+        other.title == title &&
+        other.price == price &&
+        other.description == description &&
+        other.category == category &&
+        other.image == image;
   }
 
   @override
   int get hashCode {
     return id.hashCode ^
-      title.hashCode ^
-      price.hashCode ^
-      description.hashCode ^
-      category.hashCode ^
-      image.hashCode;
+        title.hashCode ^
+        price.hashCode ^
+        description.hashCode ^
+        category.hashCode ^
+        image.hashCode;
   }
 }

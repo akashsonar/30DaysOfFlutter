@@ -70,7 +70,7 @@ class HomeDetailPage extends StatelessWidget {
                                   GoogleFonts.montserrat().fontFamily.toString())
                               .make(),
                           style: ButtonStyle(
-                              // overlayColor: MaterialStateProperty.all(Vx.blueGray400),
+                              overlayColor: MaterialStateProperty.all(Vx.blueGray400),
                               backgroundColor:
                                   MaterialStateProperty.all(Vx.white),
                               shape: MaterialStateProperty.all(
