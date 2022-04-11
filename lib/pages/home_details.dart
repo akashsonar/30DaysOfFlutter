@@ -1,27 +1,37 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_app/models/cart.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:velocity_x/velocity_x.dart';
 import 'package:flutter_app/models/catalog.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 
-
-class HomeDetailPage extends StatelessWidget {
+class HomeDetailPage extends StatefulWidget {
   final Item catalog;
 
   const HomeDetailPage({Key? key, required this.catalog}) : super(key: key);
 
   @override
+  State<HomeDetailPage> createState() => _HomeDetailPageState();
+}
+
+class _HomeDetailPageState extends State<HomeDetailPage> {
+  final _cart = CartModel();
+
+  @override
   Widget build(BuildContext context) {
+    bool isInCart = _cart.items.contains(widget.catalog);
     return Scaffold(
       appBar: PreferredSize(
           preferredSize: const Size(50, 50),
           child: AppBar(
-            title: catalog.category!.text.capitalize.color(Theme.of(context).colorScheme.error).xl.bold.make(),
+            title: widget.catalog.category!.text.capitalize
+                .color(Theme.of(context).colorScheme.error)
+                .xl
+                .bold
+                .make(),
             centerTitle: true,
             backgroundColor: Colors.transparent,
-            // systemOverlayStyle: ,
           )),
-      // backgroundColor: Vx.white,
       bottomNavigationBar: Container(
         decoration: BoxDecoration(
           borderRadius: const BorderRadius.only(
@@ -34,24 +44,13 @@ class HomeDetailPage extends StatelessWidget {
             alignment: MainAxisAlignment.spaceBetween,
             // buttonPadding: Vx.m0,
             children: [
-              "\$ ${catalog.price}"
+              "\$ ${widget.catalog.price}"
                   .text
                   .xl4
                   .white
                   .bold
                   .fontFamily(GoogleFonts.montserrat().fontFamily.toString())
                   .make(),
-              // ElevatedButton.icon(
-              //     icon: const Icon(
-              //       Icons.shopping_cart_outlined,
-              //       // color: Colors.pink,
-              //       size: 24.0,
-              //     ),
-              //     onPressed: () {},
-              //     label: "add to cart".text.xl.make(),
-              //     style: ButtonStyle(
-              //         backgroundColor: MaterialStateProperty.all(Vx.teal600),
-              //         shape: MaterialStateProperty.all(const StadiumBorder()))),
               Expanded(
                   child: Row(
                 children: [
@@ -61,16 +60,39 @@ class HomeDetailPage extends StatelessWidget {
                             color: Colors.black,
                             size: 24.0,
                           ),
-                          onPressed: () {},
+                          onPressed: () {
+                            ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                              backgroundColor: Theme.of(context).colorScheme.onBackground,
+                              behavior: SnackBarBehavior.floating,
+                              width: 300,
+                              dismissDirection: DismissDirection.up,
+                              content: "Item added to Cart"
+                                  .text
+                                  .lg
+                                  .center
+                                  .color(Theme.of(context).colorScheme.onTertiary)
+                                  .make(),
+                              duration: const Duration(seconds: 2),
+                            ));
+
+                            isInCart = isInCart.toggle();
+                            final _catalog = CatalogModel();
+                            _cart.catalog = _catalog;
+                            _cart.add(widget.catalog);
+                            setState(() {});
+                          },
                           label: "add to cart"
-                              .text.capitalize
+                              .text
+                              .capitalize
                               .lg
                               .black
-                              .fontFamily(
-                                  GoogleFonts.montserrat().fontFamily.toString())
+                              .fontFamily(GoogleFonts.montserrat()
+                                  .fontFamily
+                                  .toString())
                               .make(),
                           style: ButtonStyle(
-                              overlayColor: MaterialStateProperty.all(Vx.blueGray400),
+                              overlayColor:
+                                  MaterialStateProperty.all(Vx.blueGray400),
                               backgroundColor:
                                   MaterialStateProperty.all(Vx.white),
                               shape: MaterialStateProperty.all(
@@ -82,15 +104,12 @@ class HomeDetailPage extends StatelessWidget {
           ).p8(),
         ),
       ),
-      // backgroundColor: Theme.of(context).colorScheme.surface,
       body: Column(
         children: [
-          // catalog.category!.text.capitalize.color(context.accentColor).xl.bold.make().pOnly(bottom: 50),
           Hero(
-            tag: Key(catalog.id.toString()),
+            tag: Key(widget.catalog.id.toString()),
             child: CachedNetworkImage(
-              // placeholder: (context, url) => const CircularProgressIndicator(),
-              imageUrl: catalog.image.toString(),
+              imageUrl: widget.catalog.image.toString(),
               errorWidget: (context, url, error) => const Icon(
                   Icons.running_with_errors_outlined,
                   semanticLabel: "Error Can't load Image"),
@@ -107,14 +126,12 @@ class HomeDetailPage extends StatelessWidget {
                   color: Theme.of(context).colorScheme.onError,
                   child: Column(
                     children: [
-                      catalog.title!.text.medium.xl3.center.bold
-                          // .color(Colors.black)
+                      widget.catalog.title!.text.medium.xl3.center.bold
                           .color(Theme.of(context).colorScheme.error)
                           .make()
                           .p24(),
-                      // const SizedBox(height: 20),
 
-                      catalog.description!.text
+                      widget.catalog.description!.text
                           .textStyle(
                               TextStyle(color: Vx.black.withOpacity(0.5)))
                           .xl

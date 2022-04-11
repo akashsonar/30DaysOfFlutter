@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_app/models/cart.dart';
 import 'package:flutter_app/models/catalog.dart';
 import 'package:flutter_app/utils/routes.dart';
 import 'package:velocity_x/velocity_x.dart';
@@ -45,8 +46,6 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
-    // String currency = "$";
-    // var name = "Akash";
     return Scaffold(
       floatingActionButton: FloatingActionButton(
         backgroundColor: Theme.of(context).colorScheme.onBackground,
@@ -59,7 +58,6 @@ class _HomePageState extends State<HomePage> {
       appBar: PreferredSize(
         preferredSize: const Size(0, 0),
         child: AppBar(
-          // systemOverlayStyle: SystemUiOverlayStyle.dark,
           backgroundColor: Theme.of(context).canvasColor,
         ),
       ),
@@ -71,7 +69,9 @@ class _HomePageState extends State<HomePage> {
               const CatalogHeader(),
               (CatalogModel.items.isNotEmpty
                   ? const CatalogList().py16().expand()
-                  : CircularProgressIndicator(color: Theme.of(context).colorScheme.background,).centered().expand())
+                  : CircularProgressIndicator(
+                      color: Theme.of(context).colorScheme.background,
+                    ).centered().expand())
             ],
           )),
     );

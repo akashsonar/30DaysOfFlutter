@@ -32,32 +32,57 @@ class _CartTotal extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-  final _cart = CartModel();
+    final _cart = CartModel();
     return SizedBox(
       height: 200,
       child: Row(mainAxisAlignment: MainAxisAlignment.spaceAround, children: [
-        "\$${_cart.totalPrice}".text.xl5.color(Theme.of(context).colorScheme.error).make(),
+        "\$${_cart.totalPrice}"
+            .text
+            .xl5
+            .color(Theme.of(context).colorScheme.error)
+            .make(),
         30.widthBox,
-        ElevatedButton(
-                style: ButtonStyle(
-                    backgroundColor: MaterialStateProperty.all(
-                        Theme.of(context).colorScheme.onBackground)),
-                onPressed: () {
-                  ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                    content: "Feature coming soon !!"
-                        .text
-                        .color(Colors.black)
-                        .make(),
-                    duration: const Duration(seconds: 1),
-                  ));
-                },
-                child: "Buy Now"
-                    .text
-                    .color(Theme.of(context).colorScheme.onSurface)
-                    .make())
+        const BuyNow()
             .w32(context)
       ]),
     );
+  }
+}
+
+class BuyNow extends StatefulWidget {
+  const BuyNow({
+    Key? key,
+  }) : super(key: key);
+
+  @override
+  State<BuyNow> createState() => _BuyNowState();
+}
+
+class _BuyNowState extends State<BuyNow> {
+  @override
+  Widget build(BuildContext context) {
+    return ElevatedButton(
+            style: ButtonStyle(
+                backgroundColor: MaterialStateProperty.all(
+                    Theme.of(context).colorScheme.onBackground)),
+            onPressed: () {
+              ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                behavior: SnackBarBehavior.floating,
+                backgroundColor: Theme.of(context).colorScheme.onBackground,
+                dismissDirection: DismissDirection.down,
+                width: 300,
+                content: "Feature coming soon !!"
+                    .text
+                    .center
+                    .color(Theme.of(context).colorScheme.onTertiary)
+                    .make(),
+                duration: const Duration(seconds: 2),
+              ));
+            },
+            child: "Buy Now"
+                .text
+                .color(Theme.of(context).colorScheme.onSurface)
+                .make());
   }
 }
 
@@ -72,19 +97,31 @@ class __CartListState extends State<_CartList> {
   final _cart = CartModel();
   @override
   Widget build(BuildContext context) {
-    return ListView.builder(
-      itemCount: _cart.items.length,
-      itemBuilder: (BuildContext context, int index) {
-        return ListTile(
-          leading: Icon(Icons.done, color: Theme.of(context).colorScheme.error),
-          title:
-              _cart.items[index].title!.text.make(),
-          trailing: IconButton(
-              onPressed: () {},
-              icon: Icon(Icons.remove_circle_outline,
-                  color: Theme.of(context).colorScheme.error)),
-        );
-      },
-    );
+    if (_cart.items.isEmpty) {
+      return "Your Cart is Empty".text.xl3.makeCentered();
+    }
+     else {
+      return ListView.builder(
+        itemCount: _cart.items.length,
+        itemBuilder: (BuildContext context, int index) {
+          return ListTile(
+            leading:
+                Icon(Icons.done, color: Theme.of(context).colorScheme.error),
+            title: _cart.items[index].title!.text
+                .color(Theme.of(context).colorScheme.error)
+                .bold
+                .make(),
+            trailing: IconButton(
+                onPressed: () {
+                  _cart.remove(_cart.items[index]);
+                  setState(() {});
+                },
+                icon: Icon(Icons.remove_circle_outline,
+                    color: Theme.of(context).colorScheme.error)),
+
+          );
+        },
+      );
+    }
   }
 }

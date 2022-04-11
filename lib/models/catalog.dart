@@ -21,7 +21,7 @@ class CatalogModel {
         orElse: null);
   }
 
-   Item getById(int id) {
+  static Item getById(int id) {
     return items.firstWhere((element) => element.id == id, orElse: null);
   }
 
