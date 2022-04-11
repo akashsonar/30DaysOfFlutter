@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_app/models/cart.dart';
 import 'package:velocity_x/velocity_x.dart';
 
 class CartPage extends StatelessWidget {
@@ -31,10 +32,11 @@ class _CartTotal extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+  final _cart = CartModel();
     return SizedBox(
       height: 200,
       child: Row(mainAxisAlignment: MainAxisAlignment.spaceAround, children: [
-        "\$9999".text.xl5.color(Theme.of(context).colorScheme.error).make(),
+        "\$${_cart.totalPrice}".text.xl5.color(Theme.of(context).colorScheme.error).make(),
         30.widthBox,
         ElevatedButton(
                 style: ButtonStyle(
@@ -42,10 +44,12 @@ class _CartTotal extends StatelessWidget {
                         Theme.of(context).colorScheme.onBackground)),
                 onPressed: () {
                   ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                      content: "Feature coming soon !!"
-                          .text
-                          .color(Colors.black)
-                          .make(), duration: const Duration(seconds: 1),));
+                    content: "Feature coming soon !!"
+                        .text
+                        .color(Colors.black)
+                        .make(),
+                    duration: const Duration(seconds: 1),
+                  ));
                 },
                 child: "Buy Now"
                     .text
@@ -65,16 +69,20 @@ class _CartList extends StatefulWidget {
 }
 
 class __CartListState extends State<_CartList> {
+  final _cart = CartModel();
   @override
   Widget build(BuildContext context) {
     return ListView.builder(
-      itemCount: 15,
+      itemCount: _cart.items.length,
       itemBuilder: (BuildContext context, int index) {
         return ListTile(
           leading: Icon(Icons.done, color: Theme.of(context).colorScheme.error),
-          title: "item 1".text.color(Theme.of(context).colorScheme.error).make(),
+          title:
+              _cart.items[index].title!.text.make(),
           trailing: IconButton(
-              onPressed: () {}, icon: Icon(Icons.remove_circle_outline, color: Theme.of(context).colorScheme.error)),
+              onPressed: () {},
+              icon: Icon(Icons.remove_circle_outline,
+                  color: Theme.of(context).colorScheme.error)),
         );
       },
     );
