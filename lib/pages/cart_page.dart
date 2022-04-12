@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_app/core/store.dart';
 import 'package:flutter_app/models/cart.dart';
 import 'package:velocity_x/velocity_x.dart';
 
@@ -32,7 +33,7 @@ class _CartTotal extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final _cart = CartModel();
+    final CartModel _cart = (VxState.store as MyStore).cart;
     return SizedBox(
       height: 200,
       child: Row(mainAxisAlignment: MainAxisAlignment.spaceAround, children: [
@@ -42,8 +43,7 @@ class _CartTotal extends StatelessWidget {
             .color(Theme.of(context).colorScheme.error)
             .make(),
         30.widthBox,
-        const BuyNow()
-            .w32(context)
+        const BuyNow().w32(context)
       ]),
     );
   }
@@ -55,38 +55,38 @@ class BuyNow extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ElevatedButton(
-            style: ButtonStyle(
-                backgroundColor: MaterialStateProperty.all(
-                    Theme.of(context).colorScheme.onBackground)),
-            onPressed: () {
-              ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                behavior: SnackBarBehavior.floating,
-                backgroundColor: Theme.of(context).colorScheme.onBackground,
-                dismissDirection: DismissDirection.down,
-                width: 300,
-                content: "Feature coming soon !!"
-                    .text
-                    .center
-                    .color(Theme.of(context).colorScheme.onTertiary)
-                    .make(),
-                duration: const Duration(seconds: 2),
-              ));
-            },
-            child: "Buy Now"
+        style: ButtonStyle(
+            backgroundColor: MaterialStateProperty.all(
+                Theme.of(context).colorScheme.onBackground)),
+        onPressed: () {
+          ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+            behavior: SnackBarBehavior.floating,
+            backgroundColor: Theme.of(context).colorScheme.onBackground,
+            dismissDirection: DismissDirection.down,
+            width: 300,
+            content: "Feature coming soon !!"
                 .text
-                .color(Theme.of(context).colorScheme.onSurface)
-                .make());
+                .center
+                .color(Theme.of(context).colorScheme.onTertiary)
+                .make(),
+            duration: const Duration(seconds: 2),
+          ));
+        },
+        child: "Buy Now"
+            .text
+            .color(Theme.of(context).colorScheme.onSurface)
+            .make());
   }
 }
 
 class _CartList extends StatelessWidget {
-  final _cart = CartModel();
+  final CartModel _cart = (VxState.store as MyStore).cart;
+
   @override
   Widget build(BuildContext context) {
     if (_cart.items.isEmpty) {
       return "Your Cart is Empty".text.xl3.makeCentered();
-    }
-     else {
+    } else {
       return ListView.builder(
         itemCount: _cart.items.length,
         itemBuilder: (BuildContext context, int index) {
@@ -103,7 +103,6 @@ class _CartList extends StatelessWidget {
                 },
                 icon: Icon(Icons.remove_circle_outline,
                     color: Theme.of(context).colorScheme.error)),
-
           );
         },
       );

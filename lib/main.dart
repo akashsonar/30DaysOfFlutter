@@ -16,9 +16,7 @@ void main() {
     statusBarIconBrightness: Brightness.dark,
     //set brightness for icons, like dark background light icons
   ));
-  runApp(VxState(
-    store: MyStore(),
-    child: const FlutterPractice()));
+  runApp(VxState(store: MyStore(), child: const FlutterPractice()));
 }
 
 class FlutterPractice extends StatelessWidget {

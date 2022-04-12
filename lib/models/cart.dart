@@ -1,7 +1,8 @@
+import 'package:flutter_app/core/store.dart';
 import 'package:flutter_app/models/catalog.dart';
+import 'package:velocity_x/velocity_x.dart';
 
 class CartModel {
-  
   // catalog field.
   late CatalogModel catalog;
 
@@ -9,7 +10,8 @@ class CartModel {
   final List<int> _itemIds = [];
 
   //Get Items in the Cart.
-  List<Item> get items => _itemIds.map((id) => CatalogModel.getById(id)).toList();
+  List<Item> get items =>
+      _itemIds.map((id) => CatalogModel.getById(id)).toList();
 
   //Get Total Price
   num get totalPrice =>
@@ -17,10 +19,20 @@ class CartModel {
 
   //Add Item
   void add(Item item) {
-    _itemIds.add(item.id!);
+    _itemIds.add(item.id!); 
   }
 
   void remove(Item item) {
     _itemIds.remove(item.id);
+  }
+}
+
+class AddMutation extends VxMutation<MyStore> {
+  final Item item;
+
+  AddMutation(this.item);
+  @override
+  perform() {
+    store!.cart._itemIds.add(item.id as int);
   }
 }
