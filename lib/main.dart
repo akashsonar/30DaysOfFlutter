@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_app/core/store.dart';
 import 'package:flutter_app/pages/cart_page.dart';
 import 'package:flutter_app/pages/homePage.dart';
 import 'package:flutter_app/utils/routes.dart';
 import 'package:flutter_app/widgets/themes.dart';
 import 'package:flutter/services.dart';
+import 'package:velocity_x/velocity_x.dart';
 
 import 'pages/login_page.dart';
 
@@ -14,7 +16,9 @@ void main() {
     statusBarIconBrightness: Brightness.dark,
     //set brightness for icons, like dark background light icons
   ));
-  runApp(const FlutterPractice());
+  runApp(VxState(
+    store: MyStore(),
+    child: const FlutterPractice()));
 }
 
 class FlutterPractice extends StatelessWidget {

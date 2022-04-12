@@ -18,7 +18,7 @@ class CartPage extends StatelessWidget {
       ),
       body: Column(
         children: [
-          const _CartList().p32().expand(),
+          _CartList().p32().expand(),
           const Divider(),
           const _CartTotal(),
         ],
@@ -49,16 +49,9 @@ class _CartTotal extends StatelessWidget {
   }
 }
 
-class BuyNow extends StatefulWidget {
-  const BuyNow({
-    Key? key,
-  }) : super(key: key);
+class BuyNow extends StatelessWidget {
+  const BuyNow({Key? key}) : super(key: key);
 
-  @override
-  State<BuyNow> createState() => _BuyNowState();
-}
-
-class _BuyNowState extends State<BuyNow> {
   @override
   Widget build(BuildContext context) {
     return ElevatedButton(
@@ -86,14 +79,7 @@ class _BuyNowState extends State<BuyNow> {
   }
 }
 
-class _CartList extends StatefulWidget {
-  const _CartList({Key? key}) : super(key: key);
-
-  @override
-  State<_CartList> createState() => __CartListState();
-}
-
-class __CartListState extends State<_CartList> {
+class _CartList extends StatelessWidget {
   final _cart = CartModel();
   @override
   Widget build(BuildContext context) {
@@ -114,7 +100,6 @@ class __CartListState extends State<_CartList> {
             trailing: IconButton(
                 onPressed: () {
                   _cart.remove(_cart.items[index]);
-                  setState(() {});
                 },
                 icon: Icon(Icons.remove_circle_outline,
                     color: Theme.of(context).colorScheme.error)),
