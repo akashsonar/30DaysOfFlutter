@@ -62,7 +62,8 @@ class _HomeDetailPageState extends State<HomeDetailPage> {
                           ),
                           onPressed: () {
                             ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                              backgroundColor: Theme.of(context).colorScheme.onBackground,
+                              backgroundColor:
+                                  Theme.of(context).colorScheme.onBackground,
                               behavior: SnackBarBehavior.floating,
                               width: 300,
                               dismissDirection: DismissDirection.up,
@@ -70,15 +71,12 @@ class _HomeDetailPageState extends State<HomeDetailPage> {
                                   .text
                                   .lg
                                   .center
-                                  .color(Theme.of(context).colorScheme.onTertiary)
+                                  .color(
+                                      Theme.of(context).colorScheme.onTertiary)
                                   .make(),
                               duration: const Duration(seconds: 2),
                             ));
-
-                            isInCart = isInCart.toggle();
-                            final _catalog = CatalogModel();
-                            _cart.catalog = _catalog;
-                            _cart.add(widget.catalog);
+                            AddMutation(widget.catalog);
                             setState(() {});
                           },
                           label: "add to cart"
@@ -124,23 +122,24 @@ class _HomeDetailPageState extends State<HomeDetailPage> {
                   width: context.screenWidth,
                   // color: Vx.white,
                   color: Theme.of(context).colorScheme.onError,
-                  child: Column(
-                    children: [
-                      widget.catalog.title!.text.medium.xl3.center.bold
-                          .color(Theme.of(context).colorScheme.error)
-                          .make()
-                          .p24(),
-
-                      widget.catalog.description!.text
-                          .textStyle(
-                              TextStyle(color: Vx.black.withOpacity(0.5)))
-                          .xl
-                          .color(Theme.of(context).colorScheme.error)
-                          .maxLines(5)
-                          .center
-                          .make(),
-                    ],
-                  ).py64(),
+                  child: SingleChildScrollView(
+                    child: Column(
+                      children: [
+                        widget.catalog.title!.text.medium.xl3.center.bold
+                            .color(Theme.of(context).colorScheme.error)
+                            .make()
+                            .p24(),
+                        widget.catalog.description!.text
+                            .textStyle(
+                                TextStyle(color: Vx.black.withOpacity(0.5)))
+                            .xl
+                            .color(Theme.of(context).colorScheme.error)
+                            .maxLines(5)
+                            .center
+                            .make(),
+                      ],
+                    ).py64(),
+                  ),
                 ).p0()),
           )
         ],

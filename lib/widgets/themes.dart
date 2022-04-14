@@ -19,7 +19,8 @@ class MyTheme {
           inversePrimary: Colors.transparent,
           surface: Colors.transparent,
           inverseSurface: Vx.white,
-          onTertiary: Colors.white),
+          onTertiary: Colors.white,
+          outline: const Color.fromARGB(255, 239, 211, 153)),
       fontFamily: GoogleFonts.poppins().fontFamily,
       appBarTheme: AppBarTheme(
           systemOverlayStyle: SystemUiOverlayStyle.dark,
@@ -30,7 +31,6 @@ class MyTheme {
           titleTextStyle: Theme.of(context).textTheme.headline6));
 
   static ThemeData darkTheme(BuildContext context) => ThemeData(
-      // primarySwatch: Colors.teal,
       colorScheme: Theme.of(context).colorScheme.copyWith(
           secondary: Vx.white,
           primary: Vx.black,
@@ -45,7 +45,8 @@ class MyTheme {
           inversePrimary: Vx.black,
           surface: Vx.gray300,
           inverseSurface: Vx.black,
-          onTertiary: Colors.white),
+          onTertiary: Colors.white,
+          outline: const Color.fromARGB(255, 239, 211, 153)),
       cardColor: Colors.black,
       canvasColor: darkGreyColor,
       fontFamily: GoogleFonts.poppins().fontFamily,

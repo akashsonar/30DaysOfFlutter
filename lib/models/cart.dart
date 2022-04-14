@@ -1,5 +1,6 @@
 import 'package:flutter_app/core/store.dart';
 import 'package:flutter_app/models/catalog.dart';
+import 'package:flutter_app/models/cart.dart';
 import 'package:velocity_x/velocity_x.dart';
 
 class CartModel {
@@ -15,7 +16,7 @@ class CartModel {
 
   //Get Total Price
   num get totalPrice =>
-      items.fold(0, (total, current) => total + current.price!);
+      items.fold(0, (total, current) => total + current.price!.toInt());
 
   //Add Item
   void add(Item item) {
@@ -54,6 +55,18 @@ class RemoveDuplicate extends VxMutation<MyStore> {
   perform() {
     final ids = CatalogModel.items.map((e) => e.id).toSet();
 
-      store!.cart._itemIds.retainWhere((element) => ids.remove(element));
+    store!.cart._itemIds.retainWhere((element) => ids.remove(element));
+  }
+}
+
+class CountItems extends VxMutation<MyStore> {
+  final Item item;
+
+  CountItems(this.item);
+
+  @override
+  perform() {
+    final countItems = CatalogModel.items.map((e) => e.id).toSet();
+    store!.cart.items.retainWhere((element) => countItems.add(element as int));
   }
 }

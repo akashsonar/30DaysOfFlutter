@@ -10,12 +10,18 @@ import 'package:velocity_x/velocity_x.dart';
 import 'pages/login_page.dart';
 
 void main() {
+
   SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
     statusBarColor: Colors.transparent,
     //color set to transperent or set your own color
     statusBarIconBrightness: Brightness.dark,
     //set brightness for icons, like dark background light icons
   ));
+
+  //to disable landscape mode
+  WidgetsFlutterBinding.ensureInitialized();
+  SystemChrome.setPreferredOrientations(
+      [DeviceOrientation.portraitUp, DeviceOrientation.portraitDown]);
   runApp(VxState(store: MyStore(), child: const FlutterPractice()));
 }
 
@@ -26,7 +32,7 @@ class FlutterPractice extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      themeMode: ThemeMode.dark,
+      themeMode: ThemeMode.light,
       theme: MyTheme.lightTheme(context),
       darkTheme: MyTheme.darkTheme(context),
       initialRoute: MyRoutes.homeRoute,
